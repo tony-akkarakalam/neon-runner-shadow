@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Neon Runner: Shadow</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <canvas id="backgroundCanvas"></canvas>
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud">
+
+        <div class="hud-left">
+
+            <div class="hud-card">
+                <span>DISTANCE</span>
+                <strong id="distance">0000</strong>
+            </div>
+
+            <div class="hud-card">
+                <span>SCORE</span>
+                <strong id="score">000000</strong>
+            </div>
+
+        </div>
+
+        <div class="hud-center">
+            <div class="logo-small">
+                NEON RUNNER
+            </div>
+
+            <div class="section-name" id="sectionName">
+                CITY STREETS
+            </div>
+        </div>
+
+        <div class="hud-right">
+
+            <div class="hud-card lives-card">
+                <span>LIVES</span>
+                <strong id="lives">♥ ♥ ♥</strong>
+            </div>
+
+            <div class="hud-card">
+                <span>BEST</span>
+                <strong id="best">000000</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Start Screen -->
+    <section id="startScreen">
+
+        <div class="start-panel">
+
+            <div class="eyebrow">
+                PARKOUR // MOVEMENT
+            </div>
+
+            <h1>
+                NEON<br>
+                <span>RUNNER</span>
+            </h1>
+
+            <p>
+                RUN. JUMP. SLIDE. SURVIVE.
+            </p>
+
+            <div class="difficulty-title">
+                SELECT DIFFICULTY
+            </div>
+
+            <div class="difficulty-grid">
+
+                <button class="difficulty-item active"
+                        data-difficulty="1">
+                    <span>01</span>
+                    EASY
+                </button>
+
+                <button class="difficulty-item"
+                        data-difficulty="2">
+                    <span>02</span>
+                    MEDIUM
+                </button>
+
+                <button class="difficulty-item"
+                        data-difficulty="3">
+                    <span>03</span>
+                    HARD
+                </button>
+
+                <button class="difficulty-item"
+                        data-difficulty="4">
+                    <span>04</span>
+                    INSANE
+                </button>
+
+            </div>
+
+            <div class="controls">
+
+                <div>
+                    <kbd>SPACE</kbd>
+                    <span>JUMP</span>
+                </div>
+
+                <div>
+                    <kbd>↓</kbd>
+                    <span>SLIDE</span>
+                </div>
+
+                <div>
+                    <kbd>SHIFT</kbd>
+                    <span>DASH</span>
+                </div>
+
+            </div>
+
+            <div class="start-hint">
+                PRESS <strong>ENTER</strong> TO RUN
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Countdown -->
+    <div id="countdownScreen" class="hidden">
+
+        <div id="countdownNumber">
+            3
+        </div>
+
+    </div>
+
+    <!-- Section notification -->
+    <div id="sectionFlash" class="hidden">
+
+        <div id="sectionFlashText">
+            CITY STREETS
+        </div>
+
+    </div>
+
+    <!-- Game Over -->
+    <section id="gameOverScreen" class="hidden">
+
+        <div class="result-panel">
+
+            <div class="eyebrow">
+                RUN TERMINATED
+            </div>
+
+            <h2>
+                YOU FELL
+            </h2>
+
+            <div class="result-stats">
+
+                <div>
+                    <span>DISTANCE</span>
+                    <strong id="finalDistance">0000</strong>
+                </div>
+
+                <div>
+                    <span>SCORE</span>
+                    <strong id="finalScore">000000</strong>
+                </div>
+
+                <div>
+                    <span>BEST</span>
+                    <strong id="finalBest">000000</strong>
+                </div>
+
+            </div>
+
+            <div class="restart">
+                PRESS <strong>SPACE</strong> TO RUN AGAIN
+            </div>
+
+            <div class="menu-hint">
+                ESC — MENU
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="game.js"></script>
+
+</body>
+</html>

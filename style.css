@@ -1,0 +1,528 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #02040a;
+    font-family: "Orbitron", sans-serif;
+    color: white;
+}
+
+body {
+    position: relative;
+}
+
+canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#backgroundCanvas {
+    z-index: 0;
+}
+
+#gameCanvas {
+    z-index: 1;
+}
+
+/* =====================================================
+HUD
+===================================================== */
+
+#hud {
+    position: fixed;
+    z-index: 10;
+
+    top: 24px;
+    left: 28px;
+    right: 28px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    pointer-events: none;
+}
+
+.hud-left,
+.hud-right {
+    display: flex;
+    gap: 10px;
+}
+
+.hud-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.hud-card {
+    min-width: 110px;
+
+    padding: 10px 15px;
+
+    border: 1px solid rgba(70, 220, 255, 0.2);
+    border-radius: 10px;
+
+    background: rgba(4, 12, 25, 0.65);
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 0 25px rgba(0, 180, 255, 0.05);
+}
+
+.hud-card span {
+    display: block;
+
+    font-size: 8px;
+    letter-spacing: 2px;
+
+    color: rgba(170, 220, 240, 0.55);
+
+    margin-bottom: 4px;
+}
+
+.hud-card strong {
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.lives-card strong {
+    color: #ff5fba;
+    letter-spacing: 4px;
+}
+
+.logo-small {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #68efff;
+}
+
+.section-name {
+    margin-top: 6px;
+
+    font-size: 8px;
+    letter-spacing: 3px;
+
+    color: rgba(255,255,255,0.4);
+}
+
+/* =====================================================
+START SCREEN
+===================================================== */
+
+#startScreen,
+#gameOverScreen {
+    position: fixed;
+    inset: 0;
+
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(15, 50, 80, 0.35),
+            rgba(1, 4, 10, 0.94) 65%
+        );
+
+    transition: opacity 0.35s ease;
+}
+
+.hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.start-panel,
+.result-panel {
+    width: min(650px, 90vw);
+
+    padding: 50px;
+
+    border: 1px solid rgba(80, 225, 255, 0.2);
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8, 21, 38, 0.94),
+            rgba(3, 8, 18, 0.96)
+        );
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.6),
+        0 0 70px rgba(0,210,255,0.07);
+
+    text-align: center;
+}
+
+.eyebrow {
+    color: #5ceeff;
+
+    font-size: 9px;
+    letter-spacing: 4px;
+
+    margin-bottom: 18px;
+}
+
+.start-panel h1 {
+    font-size: clamp(48px, 8vw, 86px);
+
+    line-height: 0.86;
+
+    letter-spacing: -3px;
+
+    font-weight: 900;
+}
+
+.start-panel h1 span {
+    color: #5ceeff;
+    text-shadow:
+        0 0 30px rgba(0,245,255,0.35);
+}
+
+.start-panel p {
+    margin-top: 22px;
+
+    font-size: 10px;
+    letter-spacing: 5px;
+
+    color: rgba(255,255,255,0.45);
+}
+
+.difficulty-title {
+    margin-top: 38px;
+    margin-bottom: 12px;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: rgba(255,255,255,0.45);
+}
+
+.difficulty-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.difficulty-item {
+    padding: 14px 5px;
+
+    border: 1px solid rgba(100,220,255,0.12);
+    border-radius: 8px;
+
+    background: rgba(255,255,255,0.025);
+
+    color: rgba(255,255,255,0.45);
+
+    font-family: inherit;
+    font-size: 9px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s,
+        background 0.2s,
+        color 0.2s;
+}
+
+.difficulty-item span {
+    display: block;
+
+    font-size: 7px;
+
+    margin-bottom: 5px;
+
+    opacity: 0.5;
+}
+
+.difficulty-item:hover,
+.difficulty-item.active {
+    color: #65efff;
+
+    border-color: rgba(0,245,255,0.6);
+
+    background: rgba(0,245,255,0.08);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+
+    margin-top: 30px;
+}
+
+.controls div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 8px;
+    letter-spacing: 1px;
+
+    color: rgba(255,255,255,0.45);
+}
+
+kbd {
+    min-width: 34px;
+
+    padding: 7px 8px;
+
+    border: 1px solid rgba(100,230,255,0.3);
+    border-radius: 5px;
+
+    background: rgba(0,245,255,0.06);
+
+    color: #72efff;
+
+    font-family: inherit;
+    font-size: 8px;
+}
+
+.start-hint {
+    margin-top: 36px;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: rgba(255,255,255,0.35);
+}
+
+.start-hint strong {
+    color: #fff;
+}
+
+/* =====================================================
+COUNTDOWN
+===================================================== */
+
+#countdownScreen {
+    position: fixed;
+    inset: 0;
+
+    z-index: 30;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+}
+
+#countdownNumber {
+    font-size: clamp(80px, 15vw, 180px);
+
+    font-weight: 900;
+
+    color: #72efff;
+
+    text-shadow:
+        0 0 20px #00f5ff,
+        0 0 70px rgba(0,245,255,0.5);
+
+    animation:
+        countdownPulse 0.9s ease-in-out;
+}
+
+@keyframes countdownPulse {
+
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+
+    40% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+}
+
+/* =====================================================
+SECTION FLASH
+===================================================== */
+
+#sectionFlash {
+    position: fixed;
+    inset: 0;
+
+    z-index: 15;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+}
+
+#sectionFlashText {
+    font-size: clamp(20px, 4vw, 44px);
+    font-weight: 800;
+
+    letter-spacing: 8px;
+
+    color: #fff;
+
+    text-shadow:
+        0 0 30px #00f5ff;
+
+    animation: sectionReveal 1.8s ease forwards;
+}
+
+@keyframes sectionReveal {
+
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+}
+
+/* =====================================================
+GAME OVER
+===================================================== */
+
+.result-panel h2 {
+    font-size: clamp(40px, 7vw, 70px);
+
+    margin-bottom: 35px;
+
+    color: #ff62c2;
+
+    text-shadow:
+        0 0 30px rgba(255,70,180,0.3);
+}
+
+.result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.result-stats div {
+    padding: 18px 10px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+
+    background: rgba(255,255,255,0.025);
+}
+
+.result-stats span {
+    display: block;
+
+    font-size: 7px;
+    letter-spacing: 2px;
+
+    color: rgba(255,255,255,0.4);
+
+    margin-bottom: 8px;
+}
+
+.result-stats strong {
+    font-size: 18px;
+}
+
+.restart {
+    margin-top: 35px;
+
+    font-size: 9px;
+    letter-spacing: 2px;
+
+    color: rgba(255,255,255,0.4);
+}
+
+.restart strong {
+    color: white;
+}
+
+.menu-hint {
+    margin-top: 18px;
+
+    font-size: 7px;
+    letter-spacing: 2px;
+
+    color: rgba(255,255,255,0.2);
+}
+
+/* =====================================================
+RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    #hud {
+        left: 12px;
+        right: 12px;
+        top: 12px;
+    }
+
+    .hud-card {
+        min-width: 78px;
+        padding: 8px;
+    }
+
+    .hud-card strong {
+        font-size: 11px;
+    }
+
+    .hud-center {
+        display: none;
+    }
+
+    .start-panel,
+    .result-panel {
+        padding: 32px 20px;
+    }
+
+    .difficulty-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .controls {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .result-stats {
+        grid-template-columns: 1fr;
+    }
+
+}
